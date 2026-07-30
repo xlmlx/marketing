@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qualtrics Global Events | XM Experiences Near You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --glacier:#00B4EE;
+    --cobalt:#0768DD;
+    --nightshade:#5F1AE5;
+    --orchid:#E672FF;
+    --teal:#23FFC1;
+    --light-grey:#EDF2F4;
+    --dark-grey:#C8CCCE;
+    --black:#000000;
+    --white:#ffffff;
+    --gradient: linear-gradient(135deg, var(--glacier), var(--cobalt), var(--nightshade), var(--orchid));
+    --font-display: 'Qualtrics Display','Inter',system-ui,sans-serif;
+    --font-body: 'Qualtrics Text','Inter',system-ui,sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:var(--font-body);
+    color:var(--black);
+    background:var(--white);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:var(--gradient);
+    background-size:180% 180%;
+    animation:heroShift 18s ease infinite;
+    color:var(--white);
+    padding:56px 6vw 96px;
+    overflow:hidden;
+  }
+  @keyframes heroShift{
+    0%{background-position:0% 30%;}
+    50%{background-position:100% 70%;}
+    100%{background-position:0% 30%;}
+  }
+  .hero-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:64px;
+  }
+  .logo-mark svg{height:26px;width:auto;display:block;}
+  .hero-eyebrow{
+    font-size:13px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    font-weight:600;
+    opacity:.85;
+    padding:6px 14px;
+    border:1px solid rgba(255,255,255,.4);
+    border-radius:999px;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:48px;
+    align-items:end;
+  }
+  h1.hero-title{
+    font-family:var(--font-display);
+    font-weight:500;
+    font-size:clamp(40px,5.4vw,76px);
+    line-height:.98;
+    margin:0 0 20px;
+    letter-spacing:-.01em;
+  }
+  .hero-sub{
+    font-size:18px;
+    line-height:1.55;
+    max-width:52ch;
+    opacity:.92;
+    margin:0;
+  }
+
+  /* orbiting globe signature */
+  .orbit-wrap{
+    position:relative;
+    height:220px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .orbit-ring{
+    position:absolute;
+    border:1px dashed rgba(255,255,255,.35);
+    border-radius:50%;
+  }
+  .r1{width:210px;height:210px;animation:spin 40s linear infinite;}
+  .r2{width:150px;height:150px;animation:spin 28s linear infinite reverse;}
+  .r3{width:90px;height:90px;border-style:solid;border-color:rgba(255,255,255,.5);}
+  @keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+  .orbit-dot{
+    position:absolute;
+    width:10px;height:10px;border-radius:50%;
+    background:var(--teal);
+    box-shadow:0 0 0 6px rgba(35,255,193,.25);
+    top:0; left:50%;
+    transform:translate(-50%,-50%);
+  }
+  .r2 .orbit-dot{background:var(--white);box-shadow:0 0 0 6px rgba(255,255,255,.25);}
+
+  .stat-row{
+    display:flex;
+    gap:28px;
+    margin-top:auto;
+    padding-top:18px;
+  }
+  .stat b{display:block;font-family:var(--font-display);font-weight:500;font-size:28px;}
+  .stat span{font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;opacity:.8;}
+
+  /* ---------- NAV / REGION TABS ---------- */
+  .region-nav{
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:var(--white);
+    border-bottom:1px solid var(--light-grey);
+    display:flex;
+    gap:4px;
+    padding:0 6vw;
+    overflow-x:auto;
+  }
+  .region-tab{
+    appearance:none;
+    background:none;
+    border:none;
+    font-family:var(--font-body);
+    font-weight:600;
+    font-size:14.5px;
+    padding:18px 20px 16px;
+    color:var(--black);
+    opacity:.45;
+    cursor:pointer;
+    position:relative;
+    white-space:nowrap;
+    border-bottom:3px solid transparent;
+    transition:opacity .15s ease, border-color .15s ease;
+  }
+  .region-tab .count{
+    font-size:11px;
+    background:var(--light-grey);
+    color:var(--black);
+    padding:1px 7px;
+    border-radius:999px;
+    margin-left:7px;
+    font-weight:700;
+    opacity:1;
+  }
+  .region-tab.active{opacity:1;border-color:var(--cobalt);}
+  .region-tab:hover{opacity:1;}
+
+  /* ---------- MAIN ---------- */
+  main{padding:44px 6vw 100px;max-width:1280px;margin:0 auto;}
+
+  .section-head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:24px;
+    margin-bottom:8px;
+    flex-wrap:wrap;
+  }
+  .section-head h2{
+    font-family:var(--font-display);
+    font-weight:500;
+    font-size:32px;
+    margin:0;
+  }
+  .section-note{
+    font-size:14px;
+    color:#5a6165;
+    max-width:60ch;
+    margin:6px 0 28px;
+  }
+
+  .filter-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:32px;
+  }
+  .chip{
+    appearance:none;
+    border:1px solid var(--dark-grey);
+    background:var(--white);
+    border-radius:999px;
+    padding:8px 16px;
+    font-size:13px;
+    font-weight:600;
+    font-family:var(--font-body);
+    cursor:pointer;
+    color:var(--black);
+    transition:all .15s ease;
+  }
+  .chip:hover{border-color:var(--cobalt);}
+  .chip.active{
+    background:var(--black);
+    border-color:var(--black);
+    color:var(--white);
+  }
+  .filter-divider{width:1px;background:var(--dark-grey);margin:4px 8px;}
+
+  /* month groups */
+  .month-heading{
+    font-family:var(--font-display);
+    font-weight:500;
+    font-size:15px;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    color:var(--cobalt);
+    margin:40px 0 14px;
+    padding-bottom:8px;
+    border-bottom:1px solid var(--light-grey);
+  }
+  .month-heading:first-of-type{margin-top:0;}
+
+  .card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+    gap:16px;
+  }
+
+  .event-card{
+    border:1px solid var(--light-grey);
+    border-radius:16px;
+    padding:20px;
+    position:relative;
+    background:var(--white);
+    transition:box-shadow .2s ease, transform .2s ease;
+  }
+  .event-card:hover{
+    box-shadow:0 12px 28px -14px rgba(7,104,221,.35);
+    transform:translateY(-2px);
+  }
+  .card-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .type-badge{
+    font-size:11px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    padding:4px 10px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  .cu-tag{
+    font-size:11.5px;
+    font-weight:600;
+    color:#5a6165;
+    white-space:nowrap;
+  }
+  .event-date{
+    font-size:13px;
+    font-weight:700;
+    color:var(--cobalt);
+    margin-bottom:6px;
+  }
+  .event-date.tentative{color:#8a6d00;}
+  .event-title{
+    font-family:var(--font-display);
+    font-weight:500;
+    font-size:19px;
+    line-height:1.25;
+    margin:0 0 8px;
+  }
+  .event-loc{
+    font-size:13.5px;
+    color:#4c5256;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-bottom:2px;
+  }
+  .event-note{
+    font-size:12.5px;
+    color:#8a6d00;
+    background:#FFF6E0;
+    display:inline-block;
+    padding:3px 9px;
+    border-radius:6px;
+    margin-top:10px;
+  }
+  .card-cta{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:14px;
+    font-size:13.5px;
+    font-weight:700;
+    color:var(--cobalt);
+    text-decoration:none;
+    border-top:1px solid var(--light-grey);
+    padding-top:12px;
+    width:100%;
+  }
+  .card-cta:hover{color:var(--nightshade);}
+
+  /* placeholder region panel */
+  .region-placeholder{
+    border:1px dashed var(--dark-grey);
+    border-radius:20px;
+    padding:64px 40px;
+    text-align:center;
+    background:var(--light-grey);
+  }
+  .region-placeholder .glyph{
+    width:56px;height:56px;
+    margin:0 auto 20px;
+    border-radius:50%;
+    background:var(--gradient);
+  }
+  .region-placeholder h3{
+    font-family:var(--font-display);
+    font-weight:500;
+    font-size:24px;
+    margin:0 0 10px;
+  }
+  .region-placeholder p{
+    max-width:48ch;
+    margin:0 auto;
+    color:#5a6165;
+    font-size:15px;
+    line-height:1.6;
+  }
+
+  .panel{display:none;}
+  .panel.active{display:block;}
+
+  footer{
+    background:var(--black);
+    color:var(--white);
+    padding:48px 6vw;
+  }
+  .footer-inner{
+    max-width:1280px;
+    margin:0 auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+  }
+  footer .logo-mark svg{height:20px;}
+  footer p{font-size:13px;color:var(--dark-grey);margin:0;max-width:52ch;line-height:1.6;}
+
+  @media (max-width:820px){
+    .hero-grid{grid-template-columns:1fr;}
+    .orbit-wrap{height:140px;}
+    .hero{padding:36px 5vw 64px;}
+    main{padding:32px 5vw 72px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-top">
+    <div class="logo-mark" aria-label="Qualtrics XM">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 563.19 159.86"><path fill="#fff" d="M186.27,111.08c-3.48,0-4.13-2.51-4.13-6.89v-43.8c0-14.94-8.41-23.84-22.52-23.84-16.82,0-24.48,12.97-24.58,25.8v.55h11.18v-.55c-.05-4.58,1.51-8.85,4.28-11.67,2.27-2.31,5.24-3.57,8.51-3.57,6.7,0,10.73,5.28,10.73,14.08v4.07l-13.5,6.39c-15.31,7.14-25.39,12.97-25.39,28.06,0,13.28,8.36,22.18,20.8,22.18,7.05,0,13.8-3.47,19.04-9.81,1.81,6.29,6.45,9.81,12.95,9.81,2.27,0,4.68-.5,7-1.46l.3-.15v-10.76l-.76.4c-1.11.6-2.42,1.21-3.93,1.11v.05ZM169.8,101.68c-3.02,4.93-8.97,9.86-15.36,9.86-6.85,0-11.13-4.48-11.13-11.72,0-10.06,8.81-15.44,16.52-18.96l9.97-4.68v25.5ZM236.89,12.37l-.45,25.85h-10.78v11.16h11.18v53.71c0,12.07,5.64,18.71,15.87,18.71,4.03,0,8.01-1.11,12.14-3.42l.25-.15v-11.16l-.86.7c-2.67,2.16-5.69,3.37-8.51,3.37-5.44,0-6.55-4.53-6.55-8.3v-53.4h17.68v-11.16h-17.68V12.37h-12.29ZM105.63,100.87c-4.68,6.74-10.02,10.46-15.11,10.46-6.65,0-9.02-6.54-9.02-12.62v-60.49h-12.39v60.9c0,14.18,6.45,22.33,17.78,22.33,9.27,0,15.36-5.03,19.04-9.76l.2,8.25h11.84V38.22h-12.39v62.66h.05ZM42.26,45.66c-3.07-5.73-8.81-8.95-15.92-8.95s-13.2,3.42-17.83,9.55C2.87,53.81,0,64.92,0,79.25c0,31.38,12.69,42.54,24.58,42.54,6.7,0,12.54-2.77,16.27-7.64v45.71h12.39V38.22h-10.58l-.35,7.44h-.05ZM40.85,101.93c-3.43,6.14-7.56,9-13,9-10.12,0-15.26-10.66-15.26-31.73s5.79-31.83,15.82-31.83c5.54,0,10.43,3.77,12.44,9.66v44.91ZM213.42,0h-12.39v120.54h12.39V0ZM337.63,38.22h-12.39v81.72h12.39V38.22ZM337.63,12.37h-12.39v14.13h12.39v-14.13ZM437.51,71.66h-.05c-7.71-3.97-13.15-7.29-13.15-14.23,0-5.98,4.23-10.01,10.58-10.01,3.37,0,6.25,1.16,8.26,3.42,2.47,2.72,3.62,6.94,3.12,11.62v.55h11.33v-.5c.4-7.69-1.86-14.48-6.25-19.16-4.08-4.27-9.72-6.49-16.32-6.49-13.25,0-22.52,8.75-22.52,21.32,0,13.68,10.98,19.51,18.99,23.79,7.96,4.32,15.51,8.4,15.51,16.95,0,7.19-5.24,12.42-12.44,12.42-7.86,0-13.5-6.59-13.75-16.04v-.5h-11.48v.55c.4,16.59,10.02,26.9,25.19,26.9s24.28-9.6,24.28-23.89c0-15.34-11.28-21.32-21.25-26.55l-.05-.15ZM389.66,94.64c-.25,5.83-1.81,10.61-4.53,13.43-1.91,2.01-4.38,3.02-7.25,3.02-9.37,0-14.36-10.91-14.36-31.58s5.14-31.88,14.46-31.88c2.67,0,4.94.96,6.75,2.82,2.52,2.62,4.03,7.04,4.33,12.47h11.53c-.15-8.55-2.42-15.39-6.75-19.91-3.83-3.97-8.97-5.98-15.36-5.98-17.48,0-27.1,15.04-27.1,42.39s9.32,42.39,26.29,42.39c13.65,0,22.21-10.06,23.27-27.1h-11.28v-.05ZM291.19,47.87l-.6-9.71h-11.84v82.32h12.39v-59.19s4.99-13.48,19.69-12.82c1.31.1,1.86.15,2.67.25v-12.32h-3.12c-8.71.35-13.5,3.07-19.19,11.47ZM547.92,11.77l-10.63,37.61h-.15l-11.43-37.61h-24.98l-8.66,15.34-9.17-15.34h-12.84l14.96,24.14-16.37,27h12.14l10.48-17.8,10.83,17.8h19.29V27.66h.15c.25,1.46.5,2.77.76,3.77.25,1.06.45,2.01.71,2.92.2.91.45,1.76.71,2.56.25.8.5,1.71.81,2.67l7.56,23.38h10.17l7.46-23.33c.55-1.86,1.06-3.67,1.51-5.43.45-1.76.91-3.72,1.26-5.88h.15v34.7h10.58V11.77h-15.26ZM497.45,35.85l13.3-22.03v43.65l-13.3-21.62Z"/></svg>
+    </div>
+    <div class="hero-eyebrow">Global Events Calendar</div>
+  </div>
+
+  <div class="hero-grid">
+    <div>
+      <h1 class="hero-title">Meet us<br>where you are.</h1>
+      <p class="hero-sub">Webinars, roundtables, tradeshows and flagship experiences from the Qualtrics XM community — across EMEA, APAC, LATAM and the Americas. Find what's next in your region below.</p>
+      <div class="stat-row">
+        <div class="stat"><b id="stat-total">–</b><span>Upcoming EMEA events</span></div>
+        <div class="stat"><b>4</b><span>Regions covered</span></div>
+      </div>
+    </div>
+    <div class="orbit-wrap" aria-hidden="true">
+      <div class="orbit-ring r1"><div class="orbit-dot"></div></div>
+      <div class="orbit-ring r2"><div class="orbit-dot"></div></div>
+      <div class="orbit-ring r3"></div>
+    </div>
+  </div>
+</div>
+
+<nav class="region-nav" id="regionNav">
+  <button class="region-tab active" data-region="emea">EMEA <span class="count" id="count-emea">0</span></button>
+  <button class="region-tab" data-region="apac">APAC</button>
+  <button class="region-tab" data-region="latam">LATAM</button>
+  <button class="region-tab" data-region="amer">AMER</button>
+</nav>
+
+<main>
+
+  <!-- EMEA PANEL -->
+  <section class="panel active" id="panel-emea">
+    <div class="section-head">
+      <h2>EMEA</h2>
+    </div>
+    <p class="section-note">Sourced from the 2026 EMEA Regional Marketing plan. Dates marked <strong>tentative</strong> are still being finalized by the regional team — check back for updates before making travel plans.</p>
+
+    <div class="filter-row" id="filters-emea"></div>
+    <div id="emea-results"></div>
+  </section>
+
+  <!-- APAC PANEL -->
+  <section class="panel" id="panel-apac">
+    <div class="section-head"><h2>APAC</h2></div>
+    <div class="region-placeholder">
+      <div class="glyph"></div>
+      <h3>Coming soon</h3>
+      <p>We're finalizing the APAC events calendar. Check back shortly, or contact your local Qualtrics team for events happening in your market.</p>
+    </div>
+  </section>
+
+  <!-- LATAM PANEL -->
+  <section class="panel" id="panel-latam">
+    <div class="section-head"><h2>LATAM</h2></div>
+    <div class="region-placeholder">
+      <div class="glyph"></div>
+      <h3>Coming soon</h3>
+      <p>We're finalizing the LATAM events calendar. Check back shortly, or contact your local Qualtrics team for events happening in your market.</p>
+    </div>
+  </section>
+
+  <!-- AMER PANEL -->
+  <section class="panel" id="panel-amer">
+    <div class="section-head"><h2>AMER</h2></div>
+    <div class="region-placeholder">
+      <div class="glyph"></div>
+      <h3>Coming soon</h3>
+      <p>We're finalizing the Americas events calendar. Check back shortly, or contact your local Qualtrics team for events happening in your market.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="logo-mark" aria-label="Qualtrics XM">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 563.19 159.86"><path fill="#fff" d="M186.27,111.08c-3.48,0-4.13-2.51-4.13-6.89v-43.8c0-14.94-8.41-23.84-22.52-23.84-16.82,0-24.48,12.97-24.58,25.8v.55h11.18v-.55c-.05-4.58,1.51-8.85,4.28-11.67,2.27-2.31,5.24-3.57,8.51-3.57,6.7,0,10.73,5.28,10.73,14.08v4.07l-13.5,6.39c-15.31,7.14-25.39,12.97-25.39,28.06,0,13.28,8.36,22.18,20.8,22.18,7.05,0,13.8-3.47,19.04-9.81,1.81,6.29,6.45,9.81,12.95,9.81,2.27,0,4.68-.5,7-1.46l.3-.15v-10.76l-.76.4c-1.11.6-2.42,1.21-3.93,1.11v.05ZM169.8,101.68c-3.02,4.93-8.97,9.86-15.36,9.86-6.85,0-11.13-4.48-11.13-11.72,0-10.06,8.81-15.44,16.52-18.96l9.97-4.68v25.5ZM236.89,12.37l-.45,25.85h-10.78v11.16h11.18v53.71c0,12.07,5.64,18.71,15.87,18.71,4.03,0,8.01-1.11,12.14-3.42l.25-.15v-11.16l-.86.7c-2.67,2.16-5.69,3.37-8.51,3.37-5.44,0-6.55-4.53-6.55-8.3v-53.4h17.68v-11.16h-17.68V12.37h-12.29ZM105.63,100.87c-4.68,6.74-10.02,10.46-15.11,10.46-6.65,0-9.02-6.54-9.02-12.62v-60.49h-12.39v60.9c0,14.18,6.45,22.33,17.78,22.33,9.27,0,15.36-5.03,19.04-9.76l.2,8.25h11.84V38.22h-12.39v62.66h.05ZM42.26,45.66c-3.07-5.73-8.81-8.95-15.92-8.95s-13.2,3.42-17.83,9.55C2.87,53.81,0,64.92,0,79.25c0,31.38,12.69,42.54,24.58,42.54,6.7,0,12.54-2.77,16.27-7.64v45.71h12.39V38.22h-10.58l-.35,7.44h-.05ZM40.85,101.93c-3.43,6.14-7.56,9-13,9-10.12,0-15.26-10.66-15.26-31.73s5.79-31.83,15.82-31.83c5.54,0,10.43,3.77,12.44,9.66v44.91ZM213.42,0h-12.39v120.54h12.39V0ZM337.63,38.22h-12.39v81.72h12.39V38.22ZM337.63,12.37h-12.39v14.13h12.39v-14.13ZM437.51,71.66h-.05c-7.71-3.97-13.15-7.29-13.15-14.23,0-5.98,4.23-10.01,10.58-10.01,3.37,0,6.25,1.16,8.26,3.42,2.47,2.72,3.62,6.94,3.12,11.62v.55h11.33v-.5c.4-7.69-1.86-14.48-6.25-19.16-4.08-4.27-9.72-6.49-16.32-6.49-13.25,0-22.52,8.75-22.52,21.32,0,13.68,10.98,19.51,18.99,23.79,7.96,4.32,15.51,8.4,15.51,16.95,0,7.19-5.24,12.42-12.44,12.42-7.86,0-13.5-6.59-13.75-16.04v-.5h-11.48v.55c.4,16.59,10.02,26.9,25.19,26.9s24.28-9.6,24.28-23.89c0-15.34-11.28-21.32-21.25-26.55l-.05-.15ZM389.66,94.64c-.25,5.83-1.81,10.61-4.53,13.43-1.91,2.01-4.38,3.02-7.25,3.02-9.37,0-14.36-10.91-14.36-31.58s5.14-31.88,14.46-31.88c2.67,0,4.94.96,6.75,2.82,2.52,2.62,4.03,7.04,4.33,12.47h11.53c-.15-8.55-2.42-15.39-6.75-19.91-3.83-3.97-8.97-5.98-15.36-5.98-17.48,0-27.1,15.04-27.1,42.39s9.32,42.39,26.29,42.39c13.65,0,22.21-10.06,23.27-27.1h-11.28v-.05ZM291.19,47.87l-.6-9.71h-11.84v82.32h12.39v-59.19s4.99-13.48,19.69-12.82c1.31.1,1.86.15,2.67.25v-12.32h-3.12c-8.71.35-13.5,3.07-19.19,11.47ZM547.92,11.77l-10.63,37.61h-.15l-11.43-37.61h-24.98l-8.66,15.34-9.17-15.34h-12.84l14.96,24.14-16.37,27h12.14l10.48-17.8,10.83,17.8h19.29V27.66h.15c.25,1.46.5,2.77.76,3.77.25,1.06.45,2.01.71,2.92.2.91.45,1.76.71,2.56.25.8.5,1.71.81,2.67l7.56,23.38h10.17l7.46-23.33c.55-1.86,1.06-3.67,1.51-5.43.45-1.76.91-3.72,1.26-5.88h.15v34.7h10.58V11.77h-15.26ZM497.45,35.85l13.3-22.03v43.65l-13.3-21.62Z"/></svg>
+    </div>
+    <p>Event details, formats, and dates may change. Items marked "tentative" are subject to confirmation by the regional team. &copy; 2026 Qualtrics. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  // ---------- DATA ----------
+  // Source: 2026 EMEA Regional Marketing Activities plan (uploaded PDF).
+  // sort: 'YYYY-MM-DD' used for ordering; null-date items are grouped at the end as "Date to be confirmed".
+  const EMEA_EVENTS = [
+    {sort:'2026-07-30', dateLabel:'30 Jul 2026', title:'Man City Stadium Tour & MR Roundtable', type:'Roundtable', cu:'North', loc:'Manchester, UK', link:'https://www.qualtrics.com/events/sr-event-page-how-leading-brands-are-combining-research-experience-data-and-ai-make-faster/'},
+    {sort:'2026-08-16', dateLabel:'16–17 Aug 2026', title:'All4Customers Cannes', type:'Tradeshow', cu:'South', loc:'Cannes, France'},
+    {sort:'2026-08-25', dateLabel:'25 Aug 2026', title:'Book Club: One Strategy for Employee & Customer Experience', type:'Webinar', cu:'Pan-EMEA', loc:'Virtual'},
+    {sort:'2026-09-01', dateLabel:'1–4 Sep 2026', title:'Esomar Congress 2026', type:'Tradeshow', cu:'Pan-EMEA', loc:'Details via Esomar'},
+    {sort:'2026-09-22', dateLabel:'22 Sep 2026', title:'Sparkassen Experience Day', type:'Customer Event', cu:'Central', loc:'Frankfurt, Germany'},
+    {sort:'2026-09-23', dateLabel:'23 Sep 2026', title:'Qualtrics + SKOPOS CX Webinar — I-CEM Customer Experience Week', type:'Webinar', cu:'Central', loc:'Virtual (DE)', link:'https://www.i-cem.de/mehr-wirkung-aus-unstrukturiertem-feedback-durch-ki-automatisierung'},
+    {sort:'2026-09-24', dateLabel:'24 Sep 2026', title:'CX Lunch & Learn', type:'In-Person Event', cu:'Central', loc:'Munich, Germany', note:'Agenda details to be confirmed'},
+    {sort:'2026-09-24b', dateLabel:'24–25 Sep 2026', title:'Printemps des études', type:'Tradeshow', cu:'South', loc:'Paris, France', link:'https://printemps-etudes.mybadgeonline.com/Accueil/Lecture-ProgrammeSC?TEevHL=727'},
+    {sort:'2026-10-07', dateLabel:'7–8 Oct 2026', title:'Customer Engagement Summit', type:'Conference', cu:'North', loc:'UK', note:'Tentative'},
+    {sort:'2026-10-14', dateLabel:'14 Oct 2026', title:'GGF Data Summit — Roundtable for CDOs', type:'Roundtable', cu:'North', loc:'Westminster, London', note:'Tentative'},
+    {sort:'2026-10-15', dateLabel:'15 Oct 2026', title:'GGF PSData.AI Conference', type:'Conference', cu:'North', loc:'Business Design Centre, London', note:'Tentative'},
+    {sort:'2026-11-05', dateLabel:'5 Nov 2026', title:'CX Vision 2035', type:'Event', cu:'North', loc:'UK', note:'Tentative'},
+    {sort:'2026-11-30', dateLabel:'Nov 2026', title:'NHS / Healthcare Customer Event with Dr. Adrienne Boissy', type:'Customer Event', cu:'North', loc:'London, UK', note:'Tentative'},
+    {sort:null, dateLabel:'Date to be confirmed', title:'Fashion & Retail Roundtable', type:'Roundtable', cu:'Central', loc:'Germany'},
+    {sort:null, dateLabel:'Date to be confirmed', title:'Lightning Talks Series', type:'Webinar', cu:'Pan-EMEA', loc:'Virtual'},
+    {sort:null, dateLabel:'Date to be confirmed', title:'Customer Panel', type:'Webinar', cu:'Pan-EMEA', loc:'Virtual'},
+    {sort:null, dateLabel:'Date to be confirmed', title:'Demo Webinar (MR & CX)', type:'Webinar', cu:'Pan-EMEA', loc:'Virtual'},
+    {sort:null, dateLabel:'Date to be confirmed', title:'Market Research Webinar (French language)', type:'Webinar', cu:'South', loc:'Virtual (FR)'},
+    {sort:null, dateLabel:'Date to be confirmed', title:'Executive Dinner — London', type:'Executive Dinner', cu:'North', loc:'London, UK'},
+    {sort:null, dateLabel:'Date to be confirmed', title:'Executive Dinner — Brussels', type:'Executive Dinner', cu:'South', loc:'Brussels, Belgium'},
+    {sort:null, dateLabel:'Date to be confirmed', title:'Executive Dinner — Amsterdam', type:'Executive Dinner', cu:'South', loc:'Amsterdam, Netherlands'},
+    {sort:null, dateLabel:'Date to be confirmed', title:'Executive Dinner — FSI, Paris', type:'Executive Dinner', cu:'South', loc:'Paris, France'},
+  ];
+
+  const TYPE_COLORS = {
+    'Webinar':        {bg:'#E6F7FF', fg:'#0768DD'},
+    'In-Person Event':{bg:'#FBE9FF', fg:'#8A1FB8'},
+    'Roundtable':     {bg:'#EFE7FD', fg:'#5F1AE5'},
+    'Tradeshow':      {bg:'#E1FFF6', fg:'#00785A'},
+    'Executive Dinner':{bg:'#E6F0FF', fg:'#0768DD'},
+    'Conference':     {bg:'#EFE7FD', fg:'#5F1AE5'},
+    'Customer Event': {bg:'#FBE9FF', fg:'#8A1FB8'},
+    'Event':          {bg:'#F0F4F1', fg:'#33403A'}
+  };
+
+  const CUS = ['All','Pan-EMEA','North','South','Central'];
+  const TYPES = ['All types', ...Object.keys(TYPE_COLORS)];
+
+  let activeCU = 'All';
+  let activeType = 'All types';
+
+  function buildFilters(){
+    const wrap = document.getElementById('filters-emea');
+    wrap.innerHTML = '';
+    CUS.forEach(cu=>{
+      const b = document.createElement('button');
+      b.className = 'chip' + (cu===activeCU ? ' active':'');
+      b.textContent = cu;
+      b.onclick = ()=>{ activeCU = cu; render(); };
+      wrap.appendChild(b);
+    });
+    const divider = document.createElement('div');
+    divider.className = 'filter-divider';
+    wrap.appendChild(divider);
+    TYPES.forEach(t=>{
+      const b = document.createElement('button');
+      b.className = 'chip' + (t===activeType ? ' active':'');
+      b.textContent = t;
+      b.onclick = ()=>{ activeType = t; render(); };
+      wrap.appendChild(b);
+    });
+  }
+
+  function monthKey(sort){
+    if(!sort) return 'TBC';
+    const d = new Date(sort.replace('b',''));
+    return d.toLocaleString('en-GB',{month:'long',year:'numeric'});
+  }
+
+  function render(){
+    buildFilters();
+    const results = document.getElementById('emea-results');
+    results.innerHTML = '';
+
+    let filtered = EMEA_EVENTS.filter(e=>{
+      const cuMatch = activeCU==='All' || e.cu===activeCU;
+      const typeMatch = activeType==='All types' || e.type===activeType;
+      return cuMatch && typeMatch;
+    });
+
+    document.getElementById('stat-total').textContent = filtered.length;
+    document.getElementById('count-emea').textContent = EMEA_EVENTS.length;
+
+    if(filtered.length===0){
+      results.innerHTML = '<div class="region-placeholder"><div class="glyph"></div><h3>No matching events</h3><p>Try a different combination of filters.</p></div>';
+      return;
+    }
+
+    // group by month, TBC last
+    const groups = {};
+    const order = [];
+    filtered
+      .slice()
+      .sort((a,b)=>{
+        if(a.sort===null) return 1;
+        if(b.sort===null) return -1;
+        return a.sort.localeCompare(b.sort);
+      })
+      .forEach(e=>{
+        const key = monthKey(e.sort);
+        if(!groups[key]){ groups[key]=[]; order.push(key); }
+        groups[key].push(e);
+      });
+
+    order.forEach(key=>{
+      const heading = document.createElement('div');
+      heading.className = 'month-heading';
+      heading.textContent = key==='TBC' ? 'Date to be confirmed' : key;
+      results.appendChild(heading);
+
+      const grid = document.createElement('div');
+      grid.className = 'card-grid';
+      groups[key].forEach(e=>grid.appendChild(card(e)));
+      results.appendChild(grid);
+    });
+  }
+
+  function card(e){
+    const c = document.createElement('article');
+    c.className = 'event-card';
+    const colors = TYPE_COLORS[e.type] || {bg:'#eee',fg:'#333'};
+    c.innerHTML = `
+      <div class="card-top">
+        <span class="type-badge" style="background:${colors.bg};color:${colors.fg}">${e.type}</span>
+        <span class="cu-tag">${e.cu}</span>
+      </div>
+      <div class="event-date ${e.sort===null?'tentative':''}">${e.dateLabel}</div>
+      <h3 class="event-title">${e.title}</h3>
+      <div class="event-loc">📍 ${e.loc}</div>
+      ${e.note ? `<div class="event-note">${e.note}</div>` : ''}
+      ${e.link ? `<a class="card-cta" href="${e.link}" target="_blank" rel="noopener noreferrer">Register / details &rarr;</a>` : ''}
+    `;
+    return c;
+  }
+
+  // region tab switching
+  document.querySelectorAll('.region-tab').forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      document.querySelectorAll('.region-tab').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+      document.getElementById('panel-'+tab.dataset.region).classList.add('active');
+    });
+  });
+
+  render();
+</script>
+
+</body>
+</html>
